@@ -28,6 +28,10 @@ export declare function stopScanningAsync(): Promise<void>;
 export declare function cancelConnect(peripheralUuid: string, options?: object): void;
 export declare function reset(): void;
 
+export declare function addServices(peripheralUuid: string , services : Service[]): Service[];
+export declare function addService(peripheralUuid: string, service : Service): Service;
+export declare function addCharacteristics(peripheralUuid: string, serviceUuid: string, characteristics: Characteristic[]): Characteristic[];
+
 export declare function on(event: "stateChange", listener: (state: string) => void): events.EventEmitter;
 export declare function on(event: "scanStart", listener: () => void): events.EventEmitter;
 export declare function on(event: "scanStop", listener: () => void): events.EventEmitter;
@@ -94,12 +98,14 @@ export declare class Peripheral extends events.EventEmitter {
     on(event: "disconnect", listener: (error: string) => void): this;
     on(event: "rssiUpdate", listener: (rssi: number) => void): this;
     on(event: "servicesDiscover", listener: (services: Service[]) => void): this;
+    on(event: "servicesDiscovered", listener: (services: Service[]) => void): this;
     on(event: string, listener: Function): this;
 
     once(event: "connect", listener: (error: string) => void): this;
     once(event: "disconnect", listener: (error: string) => void): this;
     once(event: "rssiUpdate", listener: (rssi: number) => void): this;
     once(event: "servicesDiscover", listener: (services: Service[]) => void): this;
+    once(event: "servicesDiscovered", listener: (services: Service[]) => void): this;
     once(event: string, listener: Function): this;
 }
 
@@ -133,10 +139,12 @@ export declare class Service extends events.EventEmitter {
 
     on(event: "includedServicesDiscover", listener: (includedServiceUuids: string[]) => void): this;
     on(event: "characteristicsDiscover", listener: (characteristics: Characteristic[]) => void): this;
+    on(event: "characteristicsDiscovered", listener: (characteristics: Characteristic[]) => void): this;
     on(event: string, listener: Function): this;
 
     once(event: "includedServicesDiscover", listener: (includedServiceUuids: string[]) => void): this;
     once(event: "characteristicsDiscover", listener: (characteristics: Characteristic[]) => void): this;
+    once(event: "characteristicsDiscovered", listener: (characteristics: Characteristic[]) => void): this;
     once(event: string, listener: Function): this;
 }
 
